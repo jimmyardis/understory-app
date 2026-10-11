@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Understory — A Natural History of South Carolina</title>
+<meta name="description" content="A natural history of South Carolina for iPhone, built on genuine public-domain plates, real field recordings, and an honest account of what is missing.">
+<meta property="og:title" content="Understory">
+<meta property="og:description" content="A natural history of South Carolina, built on genuine public-domain plates and real field recordings.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IM+Fell+English:ital@0;1&display=swap">
+<style>
+  :root{
+    /* the app's own paper and ink, taken from PlaceView */
+    --paper:#F4EDDE;
+    --paper-deep:#EFE6D2;
+    --ink:#2C261F;
+    --ink-soft:#574C40;
+    --ink-faint:#8B7E6D;
+    --rule:#CBBEA6;
+    --rule-faint:#E0D5BF;
+    --measure:64ch;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"EB Garamond",Georgia,"Times New Roman",serif;
+    font-size:18px;line-height:1.65;
+  }
+  .wrap{max-width:1140px;margin:0 auto;padding-inline:28px;}
+  /* letterpress caps, the way the app sets its labels */
+  .label{
+    font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--ink-faint);margin:0;
+  }
+  a{color:var(--ink);text-underline-offset:3px;text-decoration-thickness:1px;}
+
+  /* ---------- masthead ---------- */
+  header.top{text-align:center;padding-block:clamp(64px,13vw,128px) 0;}
+  h1{
+    font-family:"IM Fell English",Georgia,serif;font-weight:400;
+    font-size:clamp(3rem,12vw,7rem);line-height:1;margin:18px 0 0;
+    letter-spacing:.06em;
+  }
+  .rule-short{width:46px;height:1px;background:var(--ink);opacity:.45;margin:26px auto;}
+  .sub{
+    font-style:italic;color:var(--ink-soft);font-size:clamp(1.05rem,2.4vw,1.3rem);
+    margin:0 auto;max-width:34ch;
+  }
+  .status{
+    margin-top:34px;display:inline-block;border:1px solid var(--rule);
+    padding:7px 16px;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- the opening plate ---------- */
+  .opening{padding-block:clamp(48px,8vw,86px);text-align:center;}
+  .opening img{
+    max-width:min(330px,74vw);height:auto;display:block;margin:0 auto;
+    box-shadow:0 10px 36px rgba(44,38,31,.22);
+  }
+  .opening figcaption{
+    margin:22px auto 0;max-width:46ch;font-size:.88rem;font-style:italic;color:var(--ink-faint);
+  }
+
+  /* ---------- prose ---------- */
+  section{padding-block:clamp(46px,7vw,80px);border-top:1px solid var(--rule-faint);}
+  h2{
+    font-family:"IM Fell English",Georgia,serif;font-weight:400;
+    font-size:clamp(1.9rem,4.4vw,2.9rem);line-height:1.12;margin:10px 0 20px;
+    text-wrap:balance;
+  }
+  .prose{max-width:var(--measure);}
+  .prose p{margin:0 0 20px;}
+  .lead{font-size:1.14rem;color:var(--ink-soft);}
+  .drop::first-letter{
+    font-family:"IM Fell English",Georgia,serif;
+    float:left;font-size:4.1em;line-height:.82;padding:.05em .09em 0 0;
+  }
+
+  /* ---------- the three answers ---------- */
+  .answers{display:grid;gap:clamp(34px,5vw,60px);grid-template-columns:repeat(auto-fit,minmax(248px,1fr));margin-top:14px;}
+  .answer{display:flex;flex-direction:column;}
+  .answer img{
+    width:100%;max-width:280px;height:auto;align-self:center;
+    box-shadow:0 7px 24px rgba(44,38,31,.18);
+  }
+  .answer h3{
+    font-family:"IM Fell English",Georgia,serif;font-weight:400;
+    font-size:1.35rem;margin:24px 0 4px;
+  }
+  .answer .q{font-style:italic;color:var(--ink-faint);font-size:.9rem;margin:0 0 10px;}
+  .answer p{margin:0;font-size:.96rem;}
+
+  /* ---------- a wide figure ---------- */
+  figure.wide{margin:0;padding-block:clamp(34px,5vw,56px);}
+  figure.wide img{width:100%;height:auto;display:block;box-shadow:0 8px 30px rgba(44,38,31,.18);}
+  figure.wide figcaption{
+    margin-top:16px;font-size:.86rem;font-style:italic;color:var(--ink-faint);
+    max-width:var(--measure);
+  }
+
+  /* ---------- the ethic ---------- */
+  .creed{display:grid;gap:0;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));
+    border-top:1px solid var(--rule);margin-top:26px;}
+  .creed > div{padding:26px 26px 26px 0;border-bottom:1px solid var(--rule-faint);}
+  .creed h3{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin:0 0 10px;font-weight:400;}
+  .creed p{margin:0;font-size:.97rem;}
+
+  /* ---------- the count ---------- */
+  .count{display:flex;flex-wrap:wrap;gap:clamp(24px,6vw,64px);margin-top:10px;}
+  .count div{min-width:92px;}
+  .count b{
+    display:block;font-family:"IM Fell English",Georgia,serif;font-weight:400;
+    font-size:clamp(2.2rem,5vw,3rem);line-height:1;
+  }
+  .count span{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);}
+
+  /* ---------- pair of shots ---------- */
+  .shots{display:grid;gap:clamp(26px,4vw,48px);grid-template-columns:repeat(auto-fit,minmax(230px,1fr));align-items:start;}
+  .shots img{width:100%;max-width:300px;height:auto;display:block;margin:0 auto;
+    box-shadow:0 8px 28px rgba(44,38,31,.2);}
+  .shots figcaption{margin-top:14px;font-size:.88rem;color:var(--ink-faint);font-style:italic;text-align:center;}
+
+  footer{
+    border-top:1px solid var(--rule);padding-block:44px 64px;
+    font-size:.85rem;color:var(--ink-faint);
+  }
+  footer p{margin:0 0 10px;max-width:var(--measure);}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <p class="label">For iPhone</p>
+    <h1>UNDERSTORY</h1>
+    <div class="rule-short"></div>
+    <p class="sub">A natural history of South Carolina</p>
+    <p class="status">In private beta</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <figure class="opening">
+    <img src="img/alligator.png" alt="An app screen showing Mark Catesby's 1729 plate of an American alligator beneath a magnolia branch, captioned with its common and scientific names and full source credit">
+    <figcaption>Mark Catesby drew this alligator before 1747. The book shows you his plate, not a redrawing of it.</figcaption>
+  </figure>
+</div>
+
+<div class="wrap">
+  <section style="border-top:none">
+    <div class="prose">
+      <p class="label">What it is</p>
+      <h2>A field guide that behaves like a book</h2>
+      <p class="lead drop">Understory is a natural history of one state, built out of the engraved plates its naturalists actually left behind — Catesby, Audubon, Michaux, Wilson — and the sounds the ground actually makes. You turn pages. Each plate has a voice and a texture under your thumb. Nothing is redrawn, nothing is stock, and where something is missing the book says so instead of filling the gap.</p>
+      <p>It is organised the way the state is: five regions, fourteen habitats, and a growing set of named places where those habitats meet on real ground — Congaree, Francis Marion, Botany Bay on Edisto, Jones Gap in the mountains.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="label">Three questions</p>
+    <h2>A plate, a view, and a map</h2>
+    <p class="prose lead">The book asks three different things and answers each with a different kind of image. Keeping them apart is most of the design.</p>
+    <div class="answers">
+      <figure class="answer">
+        <img src="img/plate.png" alt="App screen showing Michaux's 1819 hand-coloured plate of eastern hemlock, with cones, captioned Eastern Hemlock, Tsuga canadensis">
+        <h3>The species</h3>
+        <p class="q">What is it?</p>
+        <p>The period plate of the creature itself, with the artist, the engraver, the work and the year under it. This hemlock was drawn by Henri-Joseph Redouté and engraved by Bessin for Michaux's <em>North American Sylva</em> in 1819.</p>
+      </figure>
+      <figure class="answer">
+        <img src="img/habitat.png" alt="App screen for Blackwater Swamp showing an 1865 photograph of a cypress swamp hung with Spanish moss">
+        <h3>The habitat</h3>
+        <p class="q">What does this kind of ground look like?</p>
+        <p>A period view of the habitat as a type. This cypress swamp was photographed on Port Royal Island in 1865, on a wet-collodion glass plate — the right register, and genuinely this state.</p>
+      </figure>
+      <figure class="answer">
+        <img src="img/place.png" alt="App screen for Botany Bay showing an 1825 Mills Atlas map cropped tight to Edisto Island">
+        <h3>The place</h3>
+        <p class="q">Where is this ground?</p>
+        <p>Robert Mills surveyed every district of South Carolina and published the atlas in 1825. Each place leads with his sheet, cropped tight to its own ground, with the whole district one swipe away.</p>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <p class="label">Stay a while</p>
+    <h2>And then the present tense</h2>
+    <div class="prose">
+      <p>The pages stay in the period. But each place has a window you can open onto it as it is now — real footage of that ground, with the sound that was recorded alongside it. Where there is a real recording, the book's own synthesised soundscape steps aside entirely, because a built bed played over a real marsh would be the one dishonest sound in the app.</p>
+      <p>Botany Bay was filmed twice, at midday and at moonrise. The window shows you the hour you are actually in, solved from the date rather than guessed from a clock — and you can override it and go look at the moon on the marsh at noon.</p>
+    </div>
+    <div class="shots" style="margin-top:34px">
+      <figure>
+        <img src="img/window.png" alt="Full-screen window showing marsh grass and tidal creek at Botany Bay, with the place name and a day/night selector in small type at the bottom">
+        <figcaption>The marsh at Botany Bay, Edisto Island</figcaption>
+      </figure>
+      <figure>
+        <img src="img/hub.png" alt="The app's table of contents, listing habitats in letterpress capitals with their regions beneath">
+        <figcaption>The table of contents</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <p class="label">The rule</p>
+    <h2>Say where everything came from, including the gaps</h2>
+    <div class="creed">
+      <div>
+        <h3>Real plates only</h3>
+        <p>Every illustration is a genuine public-domain plate with its artist, engraver, work, year and archive recorded. Nothing is redrawn in a period style and passed off as period work.</p>
+      </div>
+      <div>
+        <h3>Honest silence</h3>
+        <p>Extinct species have no recording and never will. Where a call cannot exist, the soundscape holds a gap rather than substituting a cousin's voice. The Carolina parakeet and the passenger pigeon are both silent on purpose.</p>
+      </div>
+      <div>
+        <h3>Marked stand-ins</h3>
+        <p>Provisional sounds and stand-in footage carry a note in the data saying what they really are, so nothing borrowed can ship unnoticed.</p>
+      </div>
+      <div>
+        <h3>Named absences</h3>
+        <p>A species that lives somewhere but has no plate yet is still listed — unlinked, in the same hand. A place should not appear to hold only what we happen to have drawn.</p>
+      </div>
+    </div>
+  </section>
+
+  <figure class="wide">
+    <img src="img/section.png" alt="A cross-section diagram of the Congaree floodplain, labelled bluff, natural levee, flats, slough, oxbow and river, with eight numbered species markers">
+    <figcaption>The Congaree in section: six grounds in under a mile. The natural levee stands higher than the flats behind it, because the river builds it from its own silt — which is the one thing a map cannot show you. This drawing is a working stand-in, labelled as such until the engraved plate is made.</figcaption>
+  </figure>
+
+  <section>
+    <p class="label">So far</p>
+    <h2>What is in it</h2>
+    <div class="count">
+      <div><b>93</b><span>Plates</span></div>
+      <div><b>14</b><span>Habitats</span></div>
+      <div><b>5</b><span>Regions</span></div>
+      <div><b>4</b><span>Places</span></div>
+    </div>
+    <div class="prose" style="margin-top:28px">
+      <p>It grows in small rounds rather than all at once — a few plates at a time, each with its source traced, its sound found or honestly marked, and its text checked. The most recent additions are the eastern hemlock and the tulip poplar, so the mountains finally have a canopy.</p>
+      <p>The hemlock is the book's first loss still in progress. The chestnut, the Carolina parakeet and the passenger pigeon are already finished; the hemlock woolly adelgid is killing hemlock across these mountains now, and warming the streams the brook trout need.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="label">Sources</p>
+    <h2>Where the book's pictures come from</h2>
+    <div class="prose">
+      <p>Mark Catesby, <em>The Natural History of Carolina, Florida and the Bahama Islands</em> (1729–1747). John James Audubon, <em>The Birds of America</em>. François André Michaux, <em>The North American Sylva</em> (1819). Alexander Wilson, <em>American Ornithology</em>. Robert Mills, <em>Atlas of the State of South Carolina</em> (1825). <em>Picturesque America</em> (1872–74). The Library of Congress, the Biodiversity Heritage Library, and the Internet Archive.</p>
+      <p>Field recordings come from iNaturalist, xeno-canto and Freesound under CC0 and CC-BY licences, each credited by recordist inside the app, alongside original recordings made on the ground.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>Understory is in private beta and is not yet on the App Store.</p>
+    <p>Built in South Carolina. Every plate on this page is public domain; the photographs of the app are of the app itself.</p>
+  </div>
+</footer>
+
+</body>
+</html>
